@@ -6,6 +6,6 @@ An implemententation of the Sieve of Eratosthenes in Golang.
 
 Contact me at diegojromerolopez at gmail dot com
 
-## License
+## License
 
 [MIT](LICENSE)
