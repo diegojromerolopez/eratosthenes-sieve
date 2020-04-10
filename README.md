@@ -1,6 +1,8 @@
 # Eratosthenes' Sieve
 
-An implemententation of the Sieve of Eratosthenes in Golang.
+An implemententation of the
+[Sieve of Eratosthenes](https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes)
+in Golang.
 
 ## Contact me
 
