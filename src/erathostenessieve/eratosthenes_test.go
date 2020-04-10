@@ -1,24 +1,21 @@
 package eratosthenessieve
 
 import (
-	"fmt"
 	"math/big"
-	"reflect"
 	"testing"
 )
 
-func TestSieveOfErathostenesInt(t *testing.T) {
-	primes := SieveOfErathostenesInt(int64(33))
-	expectedPrimes := []int64{2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31}
-	if reflect.DeepEqual(primes, expectedPrimes) {
-		t.Logf("Prime count OK")
-	} else {
-		t.Errorf("Prime fucked: %s", fmt.Sprint(primes))
-	}
-}
-
 func TestSieveOfErathostenes(t *testing.T) {
-	primes := SieveOfErathostenes(big.NewInt(33))
+	n := big.NewInt(33)
+
+	var primes []*big.Int
+	primeStorer := func(prime *big.Int) {
+		primes = append(primes, prime)
+	}
+
+	sieve := newSieveOfErathostenes(n, primeStorer)
+	sieve.Run()
+
 	expectedPrimes := []int64{2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31}
 	badPrimesCount := 0
 	for i := 0; i < len(primes); i++ {
