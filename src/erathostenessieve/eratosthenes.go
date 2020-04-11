@@ -23,14 +23,15 @@ func (sieve SieveOfErathostenes) Run() {
 	two := big.NewInt(int64(2))
 	isPrime := make(map[string]bool)
 	for i := two; i.Cmp(sieve.limit) <= 0; i = new(big.Int).Add(i, one) {
-		iIsPrime, iPrimalityIsComputed := isPrime[i.String()]
+		iString := i.String()
+		iIsPrime, iPrimalityIsComputed := isPrime[iString]
 		if iIsPrime || !iPrimalityIsComputed {
 			jStart := new(big.Int).Exp(i, two, nil)
 			for j := jStart; j.Cmp(sieve.limit) <= 0; j = new(big.Int).Add(j, i) {
 				isPrime[j.String()] = false
 			}
 			sieve.primeStorer(i)
-			delete(isPrime, i.String())
+			delete(isPrime, iString)
 		}
 	}
 }
