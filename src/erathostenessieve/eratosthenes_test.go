@@ -45,6 +45,45 @@ func TestSieveOfEratosthenes(t *testing.T) {
 
 }
 
+func TestSieveOfEratosthenesFor2(t *testing.T) {
+	n := big.NewInt(2)
+
+	var primes []*big.Int
+	primeStorer := func(prime *big.Int) {
+		primes = append(primes, prime)
+	}
+
+	startTime := time.Now()
+
+	sieve := newSieveOfEratosthenes(n, primeStorer)
+	sieve.Run()
+
+	elapsedTime := time.Since(startTime)
+
+	expectedPrimes := []int64{2}
+	if len(expectedPrimes) != len(primes) {
+		t.Errorf("Prime count failed on: %d primes expected, %d found.",
+			len(expectedPrimes), len(primes))
+	}
+
+	badPrimesCount := 0
+	for i := 0; i < len(primes); i++ {
+		expectedPrimeI := big.NewInt(int64(expectedPrimes[i]))
+		if expectedPrimeI.Cmp(primes[i]) != 0 {
+			t.Errorf("Prime %d not found. Found %s instead.",
+				expectedPrimes[i], primes[i].String())
+			badPrimesCount++
+		}
+	}
+	if badPrimesCount == 0 {
+		t.Logf("Prime OK")
+		t.Logf("Elapsed time: %s", elapsedTime)
+	} else {
+		t.Errorf("Prime count failed on: %d primes", badPrimesCount)
+	}
+
+}
+
 func TestSieveOfEratosthenesPerformance(t *testing.T) {
 	n, ok := new(big.Int).SetString("10000000", 10)
 	if !ok {
