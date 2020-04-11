@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-func TestSieveOfErathostenes(t *testing.T) {
+func TestSieveOfEratosthenes(t *testing.T) {
 	n := big.NewInt(31)
 
 	var primes []*big.Int
@@ -16,7 +16,7 @@ func TestSieveOfErathostenes(t *testing.T) {
 
 	startTime := time.Now()
 
-	sieve := newSieveOfErathostenes(n, primeStorer)
+	sieve := newSieveOfEratosthenes(n, primeStorer)
 	sieve.Run()
 
 	elapsedTime := time.Since(startTime)
@@ -25,7 +25,6 @@ func TestSieveOfErathostenes(t *testing.T) {
 	if len(expectedPrimes) != len(primes) {
 		t.Errorf("Prime count failed on: %d primes expected, %d found.",
 			len(expectedPrimes), len(primes))
-		return
 	}
 
 	badPrimesCount := 0
@@ -46,8 +45,8 @@ func TestSieveOfErathostenes(t *testing.T) {
 
 }
 
-func TestSieveOfErathostenesPerformance(t *testing.T) {
-	n, ok := new(big.Int).SetString("10000", 10)
+func TestSieveOfEratosthenesPerformance(t *testing.T) {
+	n, ok := new(big.Int).SetString("10000000", 10)
 	if !ok {
 		t.Errorf("Invalid 10-base number found.")
 		return
@@ -60,7 +59,7 @@ func TestSieveOfErathostenesPerformance(t *testing.T) {
 
 	startTime := time.Now()
 
-	sieve := newSieveOfErathostenes(n, primeStorer)
+	sieve := newSieveOfEratosthenes(n, primeStorer)
 	sieve.Run()
 
 	elapsedTime := time.Since(startTime)

@@ -10,7 +10,7 @@ type SieveOfErathostenes struct {
 	primeStorer func(*big.Int)
 }
 
-func newSieveOfErathostenes(limit *big.Int, primeStorer func(*big.Int)) *SieveOfErathostenes {
+func newSieveOfEratosthenes(limit *big.Int, primeStorer func(*big.Int)) *SieveOfErathostenes {
 	sieve := new(SieveOfErathostenes)
 	sieve.limit = limit
 	sieve.primeStorer = primeStorer
@@ -19,10 +19,16 @@ func newSieveOfErathostenes(limit *big.Int, primeStorer func(*big.Int)) *SieveOf
 
 // Run the sieve of erathostenes get all primes lower than n (BigInt version)
 func (sieve SieveOfErathostenes) Run() {
-	one := big.NewInt(int64(1))
 	two := big.NewInt(int64(2))
+	three := big.NewInt(int64(3))
 	isPrime := make(map[string]bool)
-	for i := two; i.Cmp(sieve.limit) <= 0; i = new(big.Int).Add(i, one) {
+	// Two is the only even number that can be prime
+	if sieve.limit.Cmp(two) >= 0 {
+		sieve.primeStorer(two)
+	}
+
+	// Odd numbers: starting in 3, loop increasing by two
+	for i := three; i.Cmp(sieve.limit) <= 0; i = new(big.Int).Add(i, two) {
 		iString := i.String()
 		iIsPrime, iPrimalityIsComputed := isPrime[iString]
 		if iIsPrime || !iPrimalityIsComputed {
@@ -31,7 +37,7 @@ func (sieve SieveOfErathostenes) Run() {
 				isPrime[j.String()] = false
 			}
 			sieve.primeStorer(i)
-			delete(isPrime, iString)
 		}
+		delete(isPrime, iString)
 	}
 }
